@@ -16,6 +16,8 @@
         <!-- Scripts -->
         {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
         <link rel="stylesheet" href="{{ asset('css/app.css?V='.now()->format('H.s')) }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css?V='.now()->format('H.s')) }}">
+        <link rel="stylesheet" href="{{ asset('css/formulario.css?v='.now()->format('H.s')) }}">
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
