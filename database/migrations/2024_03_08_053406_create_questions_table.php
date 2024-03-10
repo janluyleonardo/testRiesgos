@@ -17,7 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->id();
             $table->string('pregunta');
             $table->string('respuestaUno');
-            $table->string('repuestaDos');
+            $table->string('respuestaDos');
             $table->string('respuestaTres');
             $table->string('respuestaCuatro');
             $table->integer('respuestaCorrecta');

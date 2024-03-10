@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
-        {{-- @livewireStyles --}}
+        @livewireStyles
 
         <!-- Scripts -->
         {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
@@ -42,6 +42,9 @@
 
         @stack('modals')
 
-        {{-- @livewireScripts --}}
+        @livewireScripts
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
     </body>
 </html>

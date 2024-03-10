@@ -9,12 +9,15 @@ class Question extends Model
 {
     use HasFactory;
 
-    // protected $table="questions";
-
+    /**
+   * The attributes that are mass assignable.
+   *
+   * @var string[]
+   */
     protected $fillable = [
         'pregunta',
         'respuestaUno',
-        'repuestaDos',
+        'respuestaDos',
         'respuestaTres',
         'respuestaCuatro',
         'respuestaCorrecta',

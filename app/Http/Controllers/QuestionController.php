@@ -14,7 +14,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $Questions = Question::all();
+        $Questions = Question::orderBy('id', 'desc')->paginate(10);
         return view('Questions.index',compact('Questions'));
     }
 
@@ -39,17 +39,17 @@ class QuestionController extends Controller
         $request->validate([
             'pregunta'          => 'required|string|min:5|max:255',
             'respuestaUno'      => 'required|string|min:5|max:255',
-            'repuestaDos'       => 'required|string|min:5|max:255',
+            'respuestaDos'       => 'required|string|min:5|max:255',
             'respuestaTres'     => 'required|string|min:5|max:255',
             'respuestaCuatro'   => 'required|string|min:5|max:255',
             'respuestaCorrecta'   => 'required',
         ]);
-        try {
-            $newQuestion = Question::create($request->all());
-            return redirect()->route('Questions.index', $newQuestion)->banner('Guardamos con exito el registro');
-        } catch (\Throwable $th) {
-            return redirect()->route('Questions.index')->dangerBanner('Problemas para guaardar registro: '.$th->getMessage());
-        }
+            $Question = Question::create($request->all());
+            return redirect()->route('Questions.show', $Question)->banner('Guardamos con exito el registro');
+        // try {
+        // } catch (\Throwable $th) {
+            // return redirect()->route('Questions.show')->dangerBanner('Problemas para guaardar registro: '.$th->getMessage());
+        // }
     }
 
     /**
@@ -58,9 +58,11 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show(Question $question)
+    public function show(Request $request,Question $question,$id)
     {
-        //
+        $question = Question::findOrFail($id);
+        // return $question;
+        return view('Questions.show',compact('question'));
     }
 
     /**
@@ -69,10 +71,10 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Question $question,$id)
     {
-        $QuestionEdit = Question::findOrFail($id);
-        return view('Questions.edit',compact('QuestionEdit'));
+        $question = Question::findOrFail($id);
+        return view('Questions.edit',compact('question'));
     }
 
     /**
@@ -82,10 +84,15 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(Request $request, Question $question,$id)
     {
-        return $request;
-
+        $question = Question::findOrFail($id);
+        try {
+            $question->update($request->all());
+        } catch (\Throwable $th) {
+            return redirect()->route('Questions.index')->dangerBanner('No se modificó ' . $th->getMessage());
+        }
+        return redirect()->route('Questions.index',$question)->banner('Registro actualizado exitosamente.');
     }
 
     /**
@@ -94,8 +101,14 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy(Question $question,$id)
     {
-        //
+        $question = Question::findOrFail($id);
+        try {
+            $question->delete();
+        } catch (\Throwable $th) {
+            return redirect()->route('Questions.index')->dangerBanner('Registro no eliminado, revisar por que: ' . $th->getMessage());
+        }
+        return redirect()->route('Questions.index')->banner('Registro eliminado exitosamente.');
     }
 }
