@@ -10,16 +10,17 @@ class Question extends Model
     use HasFactory;
 
     /**
-   * The attributes that are mass assignable.
-   *
-   * @var string[]
-   */
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
     protected $fillable = [
-        'pregunta',
-        'respuestaUno',
-        'respuestaDos',
-        'respuestaTres',
-        'respuestaCuatro',
-        'respuestaCorrecta',
+        'question',
+        'answer',
+        'option_one',
+        'option_two',
+        'option_three',
+        'question_status',
+        'user_id',
     ];
 }

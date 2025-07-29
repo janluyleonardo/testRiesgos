@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,13 +16,16 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('pregunta');
-            $table->string('respuestaUno');
-            $table->string('respuestaDos');
-            $table->string('respuestaTres');
-            $table->string('respuestaCuatro');
-            $table->integer('respuestaCorrecta');
+            $table->string('question');
+            $table->string('answer');
+            $table->string('option_one');
+            $table->string('option_two');
+            $table->string('option_three');
+            $table->boolean('question_status')->default(1);
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

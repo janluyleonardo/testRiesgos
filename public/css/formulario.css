@@ -53,7 +53,7 @@ body {
   font-weight: bold
 }
 
-.row {
+.sombra {
   text-decoration: none !important;
   filter: drop-shadow(1px 1px 1px #000000);
 }

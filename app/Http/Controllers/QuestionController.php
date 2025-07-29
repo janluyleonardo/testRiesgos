@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionStoreRequest;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -14,8 +16,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $Questions = Question::orderBy('id', 'desc')->paginate(10);
-        return view('Questions.index',compact('Questions'));
+        $Questions = Question::where('question_status', true)->orderBy('id', 'desc')->paginate(10);
+        return view('Questions.index', compact('Questions'));
     }
 
     /**
@@ -34,22 +36,20 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionStoreRequest $request)
     {
-        $request->validate([
-            'pregunta'          => 'required|string|min:5|max:255',
-            'respuestaUno'      => 'required|string|min:5|max:255',
-            'respuestaDos'       => 'required|string|min:5|max:255',
-            'respuestaTres'     => 'required|string|min:5|max:255',
-            'respuestaCuatro'   => 'required|string|min:5|max:255',
-            'respuestaCorrecta'   => 'required',
-        ]);
-            $Question = Question::create($request->all());
-            return redirect()->route('Questions.show', $Question)->banner('Guardamos con exito el registro');
-        // try {
-        // } catch (\Throwable $th) {
-            // return redirect()->route('Questions.show')->dangerBanner('Problemas para guaardar registro: '.$th->getMessage());
-        // }
+        try {
+            $userId = Auth::id();
+            // return $userId;
+
+            $question = Question::create(array_merge($request->all(), ['user_id' => $userId]));
+            return redirect()->route('Questions.show', $question->id)->banner('Exito, Información guardada correctamente.' . $question);
+            // return redirect()->route('questions.show', $question)->with('success', 'Registro guardado con éxito');
+            // return redirect()->route('questions.show', $question)->with('success', 'Registro guardado con éxito');
+        } catch (\Exception $e) {
+            return redirect()->route('Questions.create')->dangerBanner('Error!, QuestionController:49 ' . $e->getMessage());
+            // return back()->withInput()->withErrors(['error' => 'Hubo un problema al guardar el registro: ' . $e->getMessage()]);
+        }
     }
 
     /**
@@ -58,11 +58,11 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,Question $question,$id)
+    public function show(Request $request, Question $question, $id)
     {
         $question = Question::findOrFail($id);
         // return $question;
-        return view('Questions.show',compact('question'));
+        return view('Questions.show', compact('question'));
     }
 
     /**
@@ -71,10 +71,10 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question,$id)
+    public function edit(Question $question, $id)
     {
         $question = Question::findOrFail($id);
-        return view('Questions.edit',compact('question'));
+        return view('Questions.edit', compact('question'));
     }
 
     /**
@@ -84,7 +84,7 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question,$id)
+    public function update(Request $request, $id)
     {
         $question = Question::findOrFail($id);
         try {
@@ -92,7 +92,7 @@ class QuestionController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route('Questions.index')->dangerBanner('No se modificó ' . $th->getMessage());
         }
-        return redirect()->route('Questions.index',$question)->banner('Registro actualizado exitosamente.');
+        return redirect()->route('Questions.index', $question)->banner('Registro actualizado exitosamente.');
     }
 
     /**
@@ -101,7 +101,7 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question,$id)
+    public function destroy($id)
     {
         $question = Question::findOrFail($id);
         try {
