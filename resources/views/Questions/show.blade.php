@@ -13,26 +13,26 @@
               <div class="card-header">
                 <div class="row">
                   <div class="col-md-8 mx-auto my-auto text-center">
-                    <b>{{ Str::title('Registro de pregunta') }}</b>
+                    <b>{{ Str::title(__('Question log')) }}</b>
                   </div>
                   <div class="col-md-4 text-right">
                     <a title="Regresar" href="{{ route('Questions.index', $question) }}"
-                      class="sombra btn btn-danger mx-auto">{{ __('back to') }}</a>
+                      class="sombra btn btn-danger mx-auto">{{ __('back') }}</a>
                   </div>
                 </div>
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-6"><b>Pregunta:</b></div>
-                  <div class="col-md-6">{{ $question->question }}</div>
-                  <div class="col-md-6"><b>Respuesta:</b></div>
-                  <div class="col-md-6">{{ $question->answer }}</div>
-                  <div class="col-md-6"><b>Opción uno:</b></div>
-                  <div class="col-md-6">{{ $question->option_one }}</div>
-                  <div class="col-md-6"><b>Opción dos:</b></div>
-                  <div class="col-md-6">{{ $question->option_two }}</div>
-                  <div class="col-md-6"><b>Opción tres:</b></div>
-                  <div class="col-md-6">{{ $question->option_three }}</div>
+                  <div class="col-md-3"><b>Pregunta:</b></div>
+                  <div class="col-md-9">{{ $question->question }}</div>
+                  <div class="col-md-3"><b>Respuesta:</b></div>
+                  <div class="col-md-9">{{ $question->answer }}</div>
+                  <div class="col-md-3"><b>Opción uno:</b></div>
+                  <div class="col-md-9">{{ $question->option_one }}</div>
+                  <div class="col-md-3"><b>Opción dos:</b></div>
+                  <div class="col-md-9">{{ $question->option_two }}</div>
+                  <div class="col-md-3"><b>Opción tres:</b></div>
+                  <div class="col-md-9">{{ $question->option_three }}</div>
                 </div>
               </div>
               <div class="card-footer"></div>

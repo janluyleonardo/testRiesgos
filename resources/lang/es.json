@@ -24,6 +24,7 @@
     "Browser Sessions": "Sesiones del navegador",
     "click here to request another": "haga clic aquí para solicitar otro",
     "Close": "Cerrar",
+    "Log Out": "Cerrar sesión",
     "Code": "Código",
     "Confirm": "Confirmar",
     "Confirm Password": "Confirmar contraseña",
@@ -245,5 +246,8 @@
     "Option two": "Opción dos",
     "Option three": "Opción tres",
     "back": "Regresar",
-    "Last modification": "Última modificación"
+    "Last modification": "Última modificación",
+    "Question show": "Mostrar pregunta",
+    "Question log": "Registro de pregunta",
+    "Edit question": "Editar pregunta"
 }

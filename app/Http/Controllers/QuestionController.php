@@ -40,15 +40,10 @@ class QuestionController extends Controller
     {
         try {
             $userId = Auth::id();
-            // return $userId;
-
             $question = Question::create(array_merge($request->all(), ['user_id' => $userId]));
-            return redirect()->route('Questions.show', $question->id)->banner('Exito, Información guardada correctamente.' . $question);
-            // return redirect()->route('questions.show', $question)->with('success', 'Registro guardado con éxito');
-            // return redirect()->route('questions.show', $question)->with('success', 'Registro guardado con éxito');
+            return redirect()->route('Questions.show', $question->id)->banner('Éxito, Información guardada correctamente.');
         } catch (\Exception $e) {
             return redirect()->route('Questions.create')->dangerBanner('Error!, QuestionController:49 ' . $e->getMessage());
-            // return back()->withInput()->withErrors(['error' => 'Hubo un problema al guardar el registro: ' . $e->getMessage()]);
         }
     }
 
