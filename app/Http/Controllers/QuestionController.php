@@ -16,7 +16,10 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $Questions = Question::where('question_status', true)->orderBy('id', 'desc')->paginate(10);
+        $Questions = Question::where('user_id', Auth::id())
+            ->where('question_status', true)
+            ->orderBy('id', 'desc')
+            ->paginate(10);
         return view('Questions.index', compact('Questions'));
     }
 
